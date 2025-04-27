@@ -72,7 +72,6 @@ public class Game {
         if (this.history.isEmpty()) {
             return this;
         }
-
         return this.history.get(this.history.size() - 1);
     }
     

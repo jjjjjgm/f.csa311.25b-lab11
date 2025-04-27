@@ -70,7 +70,49 @@ class App extends React.Component<Props, GameState> {
       this.setState({ cells: json['cells'] });
     }
   }
-
+  getCellValue(x: number, y: number): string {
+    const index = 3 * y + x;
+    return this.state.cells[index]?.text || '';
+  }
+  getWinner(): string | null {
+    for (let i = 0; i < 3; i++) {
+      if (
+        this.getCellValue(i, 0) &&
+        this.getCellValue(i, 0) === this.getCellValue(i, 1) &&
+        this.getCellValue(i, 1) === this.getCellValue(i, 2)
+      ) {
+        return this.getCellValue(i, 0);
+      }
+      if (
+        this.getCellValue(0, i) &&
+        this.getCellValue(0, i) === this.getCellValue(1, i) &&
+        this.getCellValue(1, i) === this.getCellValue(2, i)
+      ) {
+        return this.getCellValue(0, i);
+      }
+    }
+    if (
+      this.getCellValue(0, 0) &&
+      this.getCellValue(0, 0) === this.getCellValue(1, 1) &&
+      this.getCellValue(1, 1) === this.getCellValue(2, 2)
+    ) {
+      return this.getCellValue(0, 0);
+    }
+    if (
+      this.getCellValue(2, 0) &&
+      this.getCellValue(2, 0) === this.getCellValue(1, 1) &&
+      this.getCellValue(1, 1) === this.getCellValue(0, 2)
+    ) {
+      return this.getCellValue(2, 0);
+    }
+    return null;
+  }
+  getNextPlayer(): string {
+    const xCount = this.state.cells.filter((c) => c.text === "X").length;
+    const oCount = this.state.cells.filter((c) => c.text === "O").length;
+    return xCount <= oCount ? "X" : "O";
+  }
+      
   createCell(cell: Cell, index: number): React.ReactNode {
     if (cell.playable)
       /**
@@ -107,26 +149,32 @@ class App extends React.Component<Props, GameState> {
       this.initialized = true;
     }
   }
-
+  
   /**
    * The only method you must define in a React.Component subclass.
    * @returns the React element via JSX.
    * @see https://reactjs.org/docs/react-component.html
    */
   render(): React.ReactNode {
-    /**
-     * We use JSX to define the template. An advantage of JSX is that you
-     * can treat HTML elements as code.
-     * @see https://reactjs.org/docs/introducing-jsx.html
-     */
+    let instructions = "Loading..."; 
+  
+    if (this.state.cells.length > 0) {
+      const winner = this.getWinner();
+      if (winner) {
+        instructions = `Winner: ${winner}`;
+      } else {
+        instructions = `Next player: ${this.getNextPlayer()}`;
+      }
+    }
+  
     return (
       <div>
+        <div id="instructions">{instructions}</div> 
         <div id="board">
           {this.state.cells.map((cell, i) => this.createCell(cell, i))}
         </div>
         <div id="bottombar">
-          <button onClick={/* get the function, not call the function */this.newGame}>New Game</button>
-          {/* Exercise: implement Undo function */}
+          <button onClick={this.newGame}>New Game</button>
           <button onClick={this.handleUndo}>Undo</button>
         </div>
       </div>

@@ -1,47 +1,75 @@
 #board {
   display: grid;
-  grid-template-columns: auto auto auto;
-  background-color: #2196F3;
-  padding: 10px
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+  background-color: #bbdefb;
+  padding: 20px;
+  border-radius: 10px;
 }
 
 .cell {
-  background-color: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(0, 0, 0, 0.8);
-  padding: 20px;
-  font-size: 30px;
+  background-color: #ffffff;
+  border: 2px solid #90caf9;
+  font-size: 5vmin;
   height: 25vmin;
+  width: 25vmin;
   text-align: center;
+  vertical-align: middle;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-#bottombar {
-  height: 5vh;
+.cell:hover {
+  background-color: #e3f2fd;
+  transform: scale(1.05);
+}
+
+.playable {
+  background-color: #ffcccb;
 }
 
 #instructions {
-  height: 5vh;
-  background-color: white;
-  padding: 0px;
-  margin: 0px;
+  height: auto;
+  background-color: #e3f2fd;
+  padding: 10px;
+  margin-bottom: 10px;
   text-align: center;
-  border: 1px solid black;
+  font-size: 2rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#bottombar {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-around;
 }
 
 #bottombar button {
-  width: 50%;
-  /* height: 100%; */
-  margin: 0;
-  padding: 0;
-  position: relative;
-  float: left;
-  font-size: 2vw
+  flex: 1;
+  margin: 0 5px;
+  padding: 10px;
+  font-size: 1.5rem;
+  background-color: #90caf9;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-html,
-body {
+#bottombar button:hover {
+  background-color: #64b5f6;
+}
+
+html, body {
   height: 100%;
   margin: 0;
   padding: 0;
+  background: linear-gradient(135deg, #e0f7fa, #e1f5fe);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-
-.playable { background-color: red;}
