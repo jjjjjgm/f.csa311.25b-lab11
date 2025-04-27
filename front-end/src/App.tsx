@@ -47,6 +47,12 @@ class App extends React.Component<Props, GameState> {
     const json = await response.json();
     this.setState({ cells: json['cells'] });
   }
+  handleUndo = async () => {
+    const response = await fetch('/undo', { method: 'POST' });
+    const json = await response.json();
+    this.setState({ cells: json['cells'] });
+  }
+  
 
   /**
    * play will generate an anonymous function that the component
@@ -121,7 +127,7 @@ class App extends React.Component<Props, GameState> {
         <div id="bottombar">
           <button onClick={/* get the function, not call the function */this.newGame}>New Game</button>
           {/* Exercise: implement Undo function */}
-          <button>Undo</button>
+          <button onClick={this.handleUndo}>Undo</button>
         </div>
       </div>
     );

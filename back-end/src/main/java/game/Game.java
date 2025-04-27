@@ -68,4 +68,12 @@ public class Game {
             return board.getCell(1, 1);
         return null;
     }
+    public Game undo() {
+        if (this.history.isEmpty()) {
+            return this;
+        }
+
+        return this.history.get(this.history.size() - 1);
+    }
+    
 }
